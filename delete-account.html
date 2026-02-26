@@ -1,0 +1,209 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Solicitar Exclusão de Conta - MatchRun</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Arial, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+        }
+
+        .container {
+            background: white;
+            border-radius: 12px;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+            max-width: 500px;
+            width: 100%;
+            padding: 40px;
+        }
+
+        .header { text-align: center; margin-bottom: 30px; }
+        .logo { font-size: 24px; font-weight: bold; color: #667eea; margin-bottom: 10px; }
+        h1 { font-size: 28px; color: #333; margin-bottom: 10px; }
+        .subtitle { color: #666; font-size: 14px; line-height: 1.5; }
+
+        .warning-box {
+            background: #fff3cd;
+            border-left: 4px solid #ffc107;
+            padding: 15px;
+            margin-bottom: 25px;
+            border-radius: 4px;
+            font-size: 14px;
+            color: #856404;
+            line-height: 1.5;
+        }
+
+        .form-group { margin-bottom: 20px; }
+
+        label {
+            display: block;
+            margin-bottom: 8px;
+            color: #333;
+            font-weight: 500;
+            font-size: 14px;
+        }
+
+        input[type="email"], textarea {
+            width: 100%;
+            padding: 12px;
+            border: 1px solid #ddd;
+            border-radius: 6px;
+            font-size: 14px;
+            font-family: inherit;
+            transition: border-color 0.3s;
+        }
+
+        input[type="email"]:focus, textarea:focus {
+            outline: none;
+            border-color: #667eea;
+            box-shadow: 0 0 0 3px rgba(102,126,234,0.1);
+        }
+
+        textarea { resize: vertical; min-height: 100px; }
+
+        .checkbox-group {
+            display: flex;
+            align-items: flex-start;
+            gap: 10px;
+            margin-bottom: 20px;
+        }
+
+        input[type="checkbox"] {
+            width: 18px;
+            height: 18px;
+            margin-top: 2px;
+            cursor: pointer;
+            accent-color: #667eea;
+        }
+
+        .checkbox-label { margin: 0; font-weight: normal; line-height: 1.4; cursor: pointer; }
+
+        .button-group { display: flex; gap: 10px; margin-top: 30px; }
+
+        button, input[type="submit"] {
+            flex: 1;
+            padding: 12px;
+            border: none;
+            border-radius: 6px;
+            font-size: 14px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .btn-submit {
+            background: #dc3545;
+            color: white;
+        }
+
+        .btn-submit:hover {
+            background: #c82333;
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(220,53,69,0.3);
+        }
+
+        .btn-cancel { background: #e9ecef; color: #333; }
+        .btn-cancel:hover { background: #dee2e6; }
+
+        .info-text {
+            background: #e7f3ff;
+            border-left: 4px solid #2196F3;
+            padding: 15px;
+            border-radius: 4px;
+            font-size: 13px;
+            color: #0c5aa0;
+            margin-top: 20px;
+            line-height: 1.5;
+        }
+
+        @media (max-width: 600px) {
+            .container { padding: 25px; }
+            h1 { font-size: 22px; }
+            .button-group { flex-direction: column; }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <div class="logo">MatchRun</div>
+            <h1>Solicitar Exclusao de Conta</h1>
+            <p class="subtitle">Sentiremos sua falta! Abaixo voce pode solicitar a exclusao permanente de sua conta.</p>
+        </div>
+
+        <div class="warning-box">
+            <strong>Importante:</strong> Esta acao e irreversivel. Todos os seus dados serao deletados permanentemente do nosso sistema apos confirmacao.
+        </div>
+
+        <form action="https://formsubmit.co/juliolemosdf@gmail.com" method="POST">
+            <!-- FormSubmit config -->
+            <input type="hidden" name="_subject" value="Solicitacao de Exclusao de Conta - MatchRun">
+            <input type="hidden" name="_captcha" value="true">
+            <input type="hidden" name="_template" value="table">
+            <input type="hidden" name="_next" value="">
+            <input type="text" name="_honey" style="display:none">
+
+            <div class="form-group">
+                <label for="email">Email cadastrado na conta *</label>
+                <input
+                    type="email"
+                    id="email"
+                    name="Email do Usuario"
+                    placeholder="seu@email.com"
+                    required
+                >
+            </div>
+
+            <div class="form-group">
+                <label for="reason">Motivo da exclusao (opcional)</label>
+                <textarea
+                    id="reason"
+                    name="Motivo da Exclusao"
+                    placeholder="Nos ajude a melhorar compartilhando o motivo (opcional)..."
+                ></textarea>
+            </div>
+
+            <div class="checkbox-group">
+                <input type="checkbox" id="confirm" required>
+                <label for="confirm" class="checkbox-label">
+                    Entendo que a exclusao da minha conta e permanente e nao pode ser desfeita. Confirmo que desejo deletar minha conta.
+                </label>
+            </div>
+
+            <div class="button-group">
+                <button type="button" class="btn-cancel" onclick="history.back()">Cancelar</button>
+                <input type="submit" class="btn-submit" value="Solicitar Exclusao">
+            </div>
+        </form>
+
+        <div class="info-text">
+            <strong>O que acontece agora:</strong> Apos enviar a solicitacao, nossa equipe processara a exclusao da sua conta em ate 72 horas. Voce recebera um email de confirmacao.
+        </div>
+    </div>
+
+    <script>
+        // Configura pagina de retorno apos envio do formulario
+        var currentUrl = window.location.href;
+        var nextInput = document.querySelector('input[name="_next"]');
+        // Redireciona de volta para esta mesma pagina com parametro de sucesso
+        nextInput.value = currentUrl.split('?')[0] + '?enviado=1';
+
+        // Se voltou com sucesso, mostra mensagem
+        if (window.location.search.includes('enviado=1')) {
+            document.querySelector('form').innerHTML = '<div style="background:#d4edda;border-left:4px solid #28a745;padding:20px;border-radius:4px;color:#155724;text-align:center;">' +
+                '<strong>Solicitacao Enviada!</strong>' +
+                '<p style="margin-top:10px;font-size:13px;">Sua solicitacao de exclusao foi enviada com sucesso.<br><br>A exclusao da sua conta sera processada em ate <strong>72 horas</strong>.</p>' +
+                '</div>';
+        }
+    </script>
+</body>
+</html>

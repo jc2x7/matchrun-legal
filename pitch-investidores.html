@@ -1,0 +1,1375 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MatchRun - Pitch Investidores</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap');
+
+        :root {
+            --primary: #FF6B35;
+            --primary-dark: #E55A2B;
+            --secondary: #2EC4B6;
+            --dark: #1A1A2E;
+            --dark2: #16213E;
+            --gray: #6B7280;
+            --light: #F8F9FA;
+            --green: #22C55E;
+            --red: #EF4444;
+            --purple: #667eea;
+            --gradient: linear-gradient(135deg, #FF6B35 0%, #E55A2B 50%, #D44A1A 100%);
+            --gradient2: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        html { scroll-behavior: smooth; }
+
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            color: var(--dark);
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+
+        /* ===== NAV ===== */
+        nav {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            background: rgba(26, 26, 46, 0.95);
+            backdrop-filter: blur(10px);
+            z-index: 1000;
+            padding: 15px 0;
+        }
+
+        .nav-inner {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 30px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .nav-logo {
+            font-size: 22px;
+            font-weight: 800;
+            color: white;
+        }
+
+        .nav-logo span { color: var(--primary); }
+
+        .nav-links { display: flex; gap: 30px; list-style: none; }
+
+        .nav-links a {
+            color: rgba(255,255,255,0.7);
+            text-decoration: none;
+            font-size: 14px;
+            font-weight: 500;
+            transition: color 0.3s;
+        }
+
+        .nav-links a:hover { color: white; }
+
+        /* ===== HERO ===== */
+        .hero {
+            background: var(--dark);
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            right: -20%;
+            width: 800px;
+            height: 800px;
+            background: radial-gradient(circle, rgba(255,107,53,0.15) 0%, transparent 70%);
+            border-radius: 50%;
+        }
+
+        .hero::after {
+            content: '';
+            position: absolute;
+            bottom: -30%;
+            left: -10%;
+            width: 600px;
+            height: 600px;
+            background: radial-gradient(circle, rgba(46,196,182,0.1) 0%, transparent 70%);
+            border-radius: 50%;
+        }
+
+        .hero-inner {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 120px 30px 80px;
+            position: relative;
+            z-index: 1;
+        }
+
+        .hero-badge {
+            display: inline-block;
+            background: rgba(255,107,53,0.15);
+            color: var(--primary);
+            padding: 8px 20px;
+            border-radius: 50px;
+            font-size: 14px;
+            font-weight: 600;
+            margin-bottom: 30px;
+            border: 1px solid rgba(255,107,53,0.3);
+        }
+
+        .hero h1 {
+            font-size: 64px;
+            font-weight: 900;
+            color: white;
+            line-height: 1.1;
+            margin-bottom: 24px;
+            max-width: 800px;
+        }
+
+        .hero h1 span {
+            background: var(--gradient);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .hero-sub {
+            font-size: 20px;
+            color: rgba(255,255,255,0.6);
+            max-width: 600px;
+            margin-bottom: 40px;
+            line-height: 1.7;
+        }
+
+        .hero-stats {
+            display: flex;
+            gap: 50px;
+            margin-top: 60px;
+        }
+
+        .hero-stat h3 {
+            font-size: 42px;
+            font-weight: 800;
+            color: var(--primary);
+        }
+
+        .hero-stat p {
+            font-size: 14px;
+            color: rgba(255,255,255,0.5);
+            font-weight: 500;
+        }
+
+        /* ===== SECTIONS ===== */
+        section {
+            padding: 100px 0;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 30px;
+        }
+
+        .section-label {
+            font-size: 13px;
+            font-weight: 700;
+            color: var(--primary);
+            text-transform: uppercase;
+            letter-spacing: 3px;
+            margin-bottom: 15px;
+        }
+
+        .section-title {
+            font-size: 42px;
+            font-weight: 800;
+            color: var(--dark);
+            margin-bottom: 20px;
+            line-height: 1.2;
+        }
+
+        .section-desc {
+            font-size: 18px;
+            color: var(--gray);
+            max-width: 600px;
+            margin-bottom: 50px;
+        }
+
+        /* ===== PROBLEMA ===== */
+        .problema { background: var(--light); }
+
+        .problem-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 30px;
+        }
+
+        .problem-card {
+            background: white;
+            padding: 35px;
+            border-radius: 16px;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.06);
+            border: 1px solid rgba(0,0,0,0.05);
+        }
+
+        .problem-icon {
+            font-size: 40px;
+            margin-bottom: 20px;
+        }
+
+        .problem-card h3 {
+            font-size: 20px;
+            font-weight: 700;
+            margin-bottom: 12px;
+        }
+
+        .problem-card p {
+            font-size: 15px;
+            color: var(--gray);
+            line-height: 1.6;
+        }
+
+        /* ===== SOLUCAO ===== */
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 25px;
+        }
+
+        .feature-card {
+            background: var(--light);
+            padding: 35px;
+            border-radius: 16px;
+            display: flex;
+            gap: 20px;
+            align-items: flex-start;
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+
+        .feature-card:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+        }
+
+        .feature-icon {
+            font-size: 32px;
+            flex-shrink: 0;
+            width: 60px;
+            height: 60px;
+            background: white;
+            border-radius: 14px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.06);
+        }
+
+        .feature-card h3 {
+            font-size: 18px;
+            font-weight: 700;
+            margin-bottom: 8px;
+        }
+
+        .feature-card p {
+            font-size: 14px;
+            color: var(--gray);
+            line-height: 1.5;
+        }
+
+        /* ===== MERCADO ===== */
+        .mercado { background: var(--dark); color: white; }
+
+        .market-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 30px;
+            margin-bottom: 60px;
+        }
+
+        .market-card {
+            text-align: center;
+            padding: 30px;
+        }
+
+        .market-card h3 {
+            font-size: 48px;
+            font-weight: 800;
+            background: var(--gradient);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            margin-bottom: 10px;
+        }
+
+        .market-card p {
+            font-size: 14px;
+            color: rgba(255,255,255,0.6);
+        }
+
+        .mercado .section-title { color: white; }
+        .mercado .section-desc { color: rgba(255,255,255,0.6); }
+
+        /* ===== MODELO DE NEGOCIO ===== */
+        .modelo { background: var(--light); }
+
+        .revenue-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 25px;
+        }
+
+        .revenue-card {
+            background: white;
+            padding: 35px;
+            border-radius: 16px;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.06);
+            text-align: center;
+            border-top: 4px solid var(--primary);
+            transition: transform 0.3s;
+        }
+
+        .revenue-card:hover {
+            transform: translateY(-5px);
+        }
+
+        .revenue-card h3 {
+            font-size: 18px;
+            font-weight: 700;
+            margin-bottom: 12px;
+        }
+
+        .revenue-card .price {
+            font-size: 32px;
+            font-weight: 800;
+            color: var(--primary);
+            margin-bottom: 15px;
+        }
+
+        .revenue-card p {
+            font-size: 14px;
+            color: var(--gray);
+            line-height: 1.5;
+        }
+
+        /* ===== PROJECOES ===== */
+        .projecoes-table {
+            width: 100%;
+            border-collapse: separate;
+            border-spacing: 0;
+            margin-top: 40px;
+            border-radius: 16px;
+            overflow: hidden;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.08);
+        }
+
+        .projecoes-table thead th {
+            background: var(--dark);
+            color: white;
+            padding: 18px 20px;
+            font-size: 13px;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            text-align: left;
+        }
+
+        .projecoes-table tbody td {
+            padding: 16px 20px;
+            font-size: 15px;
+            border-bottom: 1px solid rgba(0,0,0,0.06);
+        }
+
+        .projecoes-table tbody tr:nth-child(even) {
+            background: var(--light);
+        }
+
+        .projecoes-table tbody tr:hover {
+            background: rgba(255,107,53,0.05);
+        }
+
+        .projecoes-table .highlight-row {
+            background: rgba(255,107,53,0.08) !important;
+            font-weight: 700;
+        }
+
+        .projecoes-table .highlight-row td {
+            color: var(--primary-dark);
+        }
+
+        /* ===== BARRAS DE CRESCIMENTO ===== */
+        .growth-bars {
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+            margin-top: 40px;
+        }
+
+        .growth-item {
+            display: flex;
+            align-items: center;
+            gap: 20px;
+        }
+
+        .growth-label {
+            width: 120px;
+            font-size: 14px;
+            font-weight: 600;
+            color: var(--dark);
+            flex-shrink: 0;
+        }
+
+        .growth-bar-bg {
+            flex: 1;
+            height: 40px;
+            background: var(--light);
+            border-radius: 10px;
+            overflow: hidden;
+            position: relative;
+        }
+
+        .growth-bar-fill {
+            height: 100%;
+            border-radius: 10px;
+            background: var(--gradient);
+            display: flex;
+            align-items: center;
+            justify-content: flex-end;
+            padding-right: 15px;
+            font-size: 13px;
+            font-weight: 700;
+            color: white;
+            transition: width 1.5s ease-out;
+        }
+
+        .growth-value {
+            width: 130px;
+            text-align: right;
+            font-size: 15px;
+            font-weight: 700;
+            color: var(--dark);
+            flex-shrink: 0;
+        }
+
+        /* ===== ROI ===== */
+        .roi-section { background: var(--dark); color: white; }
+        .roi-section .section-title { color: white; }
+        .roi-section .section-desc { color: rgba(255,255,255,0.6); }
+
+        .roi-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 30px;
+        }
+
+        .roi-card {
+            background: rgba(255,255,255,0.05);
+            border: 1px solid rgba(255,255,255,0.1);
+            padding: 40px;
+            border-radius: 16px;
+        }
+
+        .roi-card h3 {
+            font-size: 16px;
+            font-weight: 600;
+            color: rgba(255,255,255,0.6);
+            margin-bottom: 10px;
+        }
+
+        .roi-card .big-number {
+            font-size: 52px;
+            font-weight: 900;
+            background: var(--gradient);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .roi-card p {
+            font-size: 14px;
+            color: rgba(255,255,255,0.4);
+            margin-top: 8px;
+        }
+
+        /* ===== TIMELINE ===== */
+        .timeline {
+            position: relative;
+            padding: 40px 0;
+        }
+
+        .timeline::before {
+            content: '';
+            position: absolute;
+            left: 50%;
+            top: 0;
+            bottom: 0;
+            width: 3px;
+            background: linear-gradient(to bottom, var(--primary), var(--secondary));
+            transform: translateX(-50%);
+        }
+
+        .timeline-item {
+            display: flex;
+            align-items: center;
+            margin-bottom: 40px;
+            position: relative;
+        }
+
+        .timeline-item:nth-child(odd) {
+            flex-direction: row;
+            padding-right: 52%;
+        }
+
+        .timeline-item:nth-child(even) {
+            flex-direction: row-reverse;
+            padding-left: 52%;
+        }
+
+        .timeline-dot {
+            position: absolute;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 20px;
+            height: 20px;
+            background: var(--primary);
+            border-radius: 50%;
+            border: 4px solid white;
+            box-shadow: 0 0 0 4px var(--primary);
+            z-index: 2;
+        }
+
+        .timeline-content {
+            background: white;
+            padding: 25px 30px;
+            border-radius: 12px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.08);
+            width: 100%;
+        }
+
+        .timeline-date {
+            font-size: 13px;
+            font-weight: 700;
+            color: var(--primary);
+            margin-bottom: 6px;
+        }
+
+        .timeline-content h3 {
+            font-size: 18px;
+            font-weight: 700;
+            margin-bottom: 8px;
+        }
+
+        .timeline-content p {
+            font-size: 14px;
+            color: var(--gray);
+        }
+
+        /* ===== TRACTION ===== */
+        .traction-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 25px;
+        }
+
+        .traction-card {
+            background: white;
+            padding: 30px;
+            border-radius: 16px;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.06);
+            text-align: center;
+        }
+
+        .traction-card .icon {
+            font-size: 36px;
+            margin-bottom: 15px;
+        }
+
+        .traction-card h3 {
+            font-size: 16px;
+            font-weight: 700;
+            margin-bottom: 8px;
+        }
+
+        .traction-card p {
+            font-size: 14px;
+            color: var(--gray);
+        }
+
+        /* ===== CTA ===== */
+        .cta {
+            background: var(--gradient);
+            text-align: center;
+            padding: 100px 30px;
+        }
+
+        .cta h2 {
+            font-size: 48px;
+            font-weight: 900;
+            color: white;
+            margin-bottom: 20px;
+        }
+
+        .cta p {
+            font-size: 20px;
+            color: rgba(255,255,255,0.8);
+            margin-bottom: 40px;
+            max-width: 600px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .cta-btn {
+            display: inline-block;
+            background: white;
+            color: var(--primary-dark);
+            padding: 18px 50px;
+            border-radius: 50px;
+            font-size: 18px;
+            font-weight: 700;
+            text-decoration: none;
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+
+        .cta-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+        }
+
+        /* ===== FOOTER ===== */
+        footer {
+            background: var(--dark);
+            color: rgba(255,255,255,0.4);
+            text-align: center;
+            padding: 30px;
+            font-size: 14px;
+        }
+
+        /* ===== COMPARATIVO ===== */
+        .compare-table {
+            width: 100%;
+            border-collapse: separate;
+            border-spacing: 0;
+            margin-top: 30px;
+            border-radius: 16px;
+            overflow: hidden;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.08);
+        }
+
+        .compare-table th {
+            background: var(--dark);
+            color: white;
+            padding: 16px 20px;
+            font-size: 13px;
+            text-align: center;
+        }
+
+        .compare-table td {
+            padding: 14px 20px;
+            font-size: 14px;
+            text-align: center;
+            border-bottom: 1px solid rgba(0,0,0,0.06);
+        }
+
+        .compare-table tbody tr:nth-child(even) { background: var(--light); }
+
+        .check { color: var(--green); font-weight: 700; font-size: 18px; }
+        .cross { color: var(--red); font-weight: 700; font-size: 18px; }
+
+        /* ===== VALUATION ===== */
+        .valuation-banner {
+            background: linear-gradient(135deg, rgba(255,107,53,0.08) 0%, rgba(46,196,182,0.08) 100%);
+            border: 2px solid rgba(255,107,53,0.2);
+            border-radius: 20px;
+            padding: 50px;
+            text-align: center;
+            margin-top: 60px;
+        }
+
+        .valuation-banner h3 {
+            font-size: 16px;
+            color: var(--gray);
+            margin-bottom: 10px;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+        }
+
+        .valuation-banner .val-number {
+            font-size: 64px;
+            font-weight: 900;
+            background: var(--gradient);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .valuation-banner p {
+            font-size: 16px;
+            color: var(--gray);
+            margin-top: 10px;
+        }
+
+        /* ===== RESPONSIVE ===== */
+        @media (max-width: 900px) {
+            .hero h1 { font-size: 40px; }
+            .hero-stats { flex-direction: column; gap: 25px; }
+            .problem-grid, .features-grid, .revenue-grid, .market-grid,
+            .roi-grid, .traction-grid { grid-template-columns: 1fr; }
+            .section-title { font-size: 32px; }
+            .nav-links { display: none; }
+            .timeline::before { left: 20px; }
+            .timeline-item:nth-child(odd),
+            .timeline-item:nth-child(even) {
+                flex-direction: row;
+                padding-left: 50px;
+                padding-right: 0;
+            }
+            .timeline-dot { left: 20px; }
+            .cta h2 { font-size: 32px; }
+            .valuation-banner .val-number { font-size: 40px; }
+        }
+
+        /* ===== ANIMATIONS ===== */
+        .fade-up {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: opacity 0.6s ease, transform 0.6s ease;
+        }
+
+        .fade-up.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    </style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+    <div class="nav-inner">
+        <div class="nav-logo">Match<span>Run</span></div>
+        <ul class="nav-links">
+            <li><a href="#problema">Problema</a></li>
+            <li><a href="#solucao">Solucao</a></li>
+            <li><a href="#mercado">Mercado</a></li>
+            <li><a href="#modelo">Modelo</a></li>
+            <li><a href="#projecoes">Projecoes</a></li>
+            <li><a href="#investimento">Investimento</a></li>
+        </ul>
+    </div>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+    <div class="hero-inner">
+        <div class="hero-badge">Oportunidade de Investimento 2026</div>
+        <h1>O <span>Tinder</span> para quem corre</h1>
+        <p class="hero-sub">
+            MatchRun conecta corredores por proximidade e preferencias.
+            Swipe, match, corra junto. Simples assim.
+        </p>
+        <div class="hero-stats">
+            <div class="hero-stat">
+                <h3>12M+</h3>
+                <p>Corredores no Brasil</p>
+            </div>
+            <div class="hero-stat">
+                <h3>R$ 0</h3>
+                <p>Concorrentes diretos</p>
+            </div>
+            <div class="hero-stat">
+                <h3>4,5x</h3>
+                <p>ROI projetado em 12 meses</p>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- PROBLEMA -->
+<section class="problema" id="problema">
+    <div class="container">
+        <div class="section-label">O Problema</div>
+        <h2 class="section-title">Correr sozinho e chato.<br>Achar gente pra correr e dificil.</h2>
+        <p class="section-desc">Milhoes de corredores brasileiros querem companhia mas nao tem como encontrar parceiros com ritmo, horario e localizacao compativeis.</p>
+
+        <div class="problem-grid">
+            <div class="problem-card fade-up">
+                <div class="problem-icon">&#128566;</div>
+                <h3>Isolamento</h3>
+                <p>72% dos corredores treinam sozinhos e gostariam de ter companhia, mas nao sabem como encontrar parceiros.</p>
+            </div>
+            <div class="problem-card fade-up">
+                <div class="problem-icon">&#128269;</div>
+                <h3>Dificuldade de Conexao</h3>
+                <p>Grupos de WhatsApp sao desorganizados. Assessorias sao caras. Nao existe um jeito facil de achar corredores proximos.</p>
+            </div>
+            <div class="problem-card fade-up">
+                <div class="problem-icon">&#128683;</div>
+                <h3>Incompatibilidade</h3>
+                <p>Pace, distancia, horario e local precisam ser compativeis. Sem filtros inteligentes, e como procurar agulha no palheiro.</p>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- SOLUCAO -->
+<section id="solucao">
+    <div class="container">
+        <div class="section-label">A Solucao</div>
+        <h2 class="section-title">Swipe. Match. Corra junto.</h2>
+        <p class="section-desc">MatchRun usa a mecanica de swipe que ja e intuitiva para milhoes de brasileiros, aplicada ao mundo das corridas.</p>
+
+        <div class="features-grid">
+            <div class="feature-card fade-up">
+                <div class="feature-icon">&#128073;</div>
+                <div>
+                    <h3>Swipe em Corridas</h3>
+                    <p>Cards com informacoes de distancia, pace, local e horario. Swipe direita para "BORA!", esquerda para "PASSO".</p>
+                </div>
+            </div>
+            <div class="feature-card fade-up">
+                <div class="feature-icon">&#128205;</div>
+                <div>
+                    <h3>Geolocalizacao Inteligente</h3>
+                    <p>Filtro por raio de 5 a 100 km. Ve apenas corridas proximas e relevantes.</p>
+                </div>
+            </div>
+            <div class="feature-card fade-up">
+                <div class="feature-icon">&#128172;</div>
+                <div>
+                    <h3>Chat em Tempo Real</h3>
+                    <p>Grupo de chat integrado em cada corrida. Combina detalhes e conheca o grupo antes de correr.</p>
+                </div>
+            </div>
+            <div class="feature-card fade-up">
+                <div class="feature-icon">&#127939;</div>
+                <div>
+                    <h3>Integracao Strava</h3>
+                    <p>Conecte sua conta Strava para verificacao de perfil. Veja o historico real de corridas de cada pessoa.</p>
+                </div>
+            </div>
+            <div class="feature-card fade-up">
+                <div class="feature-icon">&#128221;</div>
+                <div>
+                    <h3>Crie Corridas</h3>
+                    <p>Organize corridas com foto de rota, distancia, pace e maximo de participantes. Facil como um post.</p>
+                </div>
+            </div>
+            <div class="feature-card fade-up">
+                <div class="feature-icon">&#128274;</div>
+                <div>
+                    <h3>Seguranca</h3>
+                    <p>Verificacao de perfil via Strava, dicas de seguranca no onboarding e confirmacao de maioridade.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- MERCADO -->
+<section class="mercado" id="mercado">
+    <div class="container">
+        <div class="section-label" style="color:var(--primary)">Oportunidade de Mercado</div>
+        <h2 class="section-title">Um mercado de bilhoes, sem dono</h2>
+        <p class="section-desc">O Brasil e o 2o pais que mais corre no mundo. Nao existe um app dominante para conexao entre corredores.</p>
+
+        <div class="market-grid">
+            <div class="market-card fade-up">
+                <h3>12M</h3>
+                <p>Corredores ativos no Brasil</p>
+            </div>
+            <div class="market-card fade-up">
+                <h3>R$ 12B</h3>
+                <p>Mercado fitness brasileiro</p>
+            </div>
+            <div class="market-card fade-up">
+                <h3>35%</h3>
+                <p>Crescimento anual de corrida de rua</p>
+            </div>
+            <div class="market-card fade-up">
+                <h3>0</h3>
+                <p>Concorrentes diretos no Brasil</p>
+            </div>
+        </div>
+
+        <div style="margin-top:30px;">
+            <h3 style="color:white;font-size:22px;margin-bottom:25px;text-align:center;">Comparativo Competitivo</h3>
+            <table class="compare-table">
+                <thead>
+                    <tr>
+                        <th>Funcionalidade</th>
+                        <th style="color:var(--primary)">MatchRun</th>
+                        <th>Strava</th>
+                        <th>Nike Run Club</th>
+                        <th>Grupos WhatsApp</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>Encontrar corredores proximos</td>
+                        <td><span class="check">&#10004;</span></td>
+                        <td><span class="cross">&#10008;</span></td>
+                        <td><span class="cross">&#10008;</span></td>
+                        <td><span class="cross">&#10008;</span></td>
+                    </tr>
+                    <tr>
+                        <td>Sistema de matching</td>
+                        <td><span class="check">&#10004;</span></td>
+                        <td><span class="cross">&#10008;</span></td>
+                        <td><span class="cross">&#10008;</span></td>
+                        <td><span class="cross">&#10008;</span></td>
+                    </tr>
+                    <tr>
+                        <td>Criar corridas em grupo</td>
+                        <td><span class="check">&#10004;</span></td>
+                        <td><span class="cross">&#10008;</span></td>
+                        <td><span class="cross">&#10008;</span></td>
+                        <td><span class="check">&#10004;</span></td>
+                    </tr>
+                    <tr>
+                        <td>Chat integrado por corrida</td>
+                        <td><span class="check">&#10004;</span></td>
+                        <td><span class="cross">&#10008;</span></td>
+                        <td><span class="cross">&#10008;</span></td>
+                        <td><span class="check">&#10004;</span></td>
+                    </tr>
+                    <tr>
+                        <td>Filtro por pace e distancia</td>
+                        <td><span class="check">&#10004;</span></td>
+                        <td><span class="cross">&#10008;</span></td>
+                        <td><span class="cross">&#10008;</span></td>
+                        <td><span class="cross">&#10008;</span></td>
+                    </tr>
+                    <tr>
+                        <td>Gratuito</td>
+                        <td><span class="check">&#10004;</span></td>
+                        <td><span class="check">&#10004;</span></td>
+                        <td><span class="check">&#10004;</span></td>
+                        <td><span class="check">&#10004;</span></td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</section>
+
+<!-- MODELO DE NEGOCIO -->
+<section class="modelo" id="modelo">
+    <div class="container">
+        <div class="section-label">Modelo de Negocio</div>
+        <h2 class="section-title">Multiplas fontes de receita</h2>
+        <p class="section-desc">Comecamos com ads e evoluimos para premium, patrocinios e marketplace.</p>
+
+        <div class="revenue-grid">
+            <div class="revenue-card fade-up">
+                <h3>Publicidade</h3>
+                <div class="price">R$ 1,50</div>
+                <p>ARPU/mes por usuario ativo. Banner, interstitial e video rewarded de marcas esportivas.</p>
+            </div>
+            <div class="revenue-card fade-up">
+                <h3>MatchRun PRO</h3>
+                <div class="price">R$ 14,90</div>
+                <p>Assinatura mensal. Filtros avancados, destaque de corridas, badge PRO e sem anuncios.</p>
+            </div>
+            <div class="revenue-card fade-up">
+                <h3>Corridas Patrocinadas</h3>
+                <div class="price">R$ 5.000</div>
+                <p>Marcas como Nike, Asics e Garmin criam corridas patrocinadas com destaque no feed.</p>
+            </div>
+        </div>
+
+        <div class="valuation-banner fade-up">
+            <h3>ARPU Combinado (Ads + 5% PRO)</h3>
+            <div class="val-number">R$ 2,25/usuario/mes</div>
+            <p>Com potencial de R$ 4,00+ ao adicionar patrocinios e marketplace</p>
+        </div>
+    </div>
+</section>
+
+<!-- PROJECOES -->
+<section id="projecoes">
+    <div class="container">
+        <div class="section-label">Projecoes de Crescimento</div>
+        <h2 class="section-title">Crescimento exponencial com reinvestimento</h2>
+        <p class="section-desc">100% da receita reinvestida em ads nos primeiros 24 meses. Evento inaugural com 200 corredores + viral loop Instagram/Strava.</p>
+
+        <h3 style="font-size:20px;margin-bottom:5px;">Crescimento de Usuarios (24 meses com reinvestimento)</h3>
+
+        <div class="growth-bars">
+            <div class="growth-item fade-up">
+                <span class="growth-label">Mes 1</span>
+                <div class="growth-bar-bg">
+                    <div class="growth-bar-fill" style="width:1%;">300</div>
+                </div>
+                <span class="growth-value">300 usuarios</span>
+            </div>
+            <div class="growth-item fade-up">
+                <span class="growth-label">Mes 5</span>
+                <div class="growth-bar-bg">
+                    <div class="growth-bar-fill" style="width:3%;">2K</div>
+                </div>
+                <span class="growth-value">2.110 usuarios</span>
+            </div>
+            <div class="growth-item fade-up">
+                <span class="growth-label">Mes 10</span>
+                <div class="growth-bar-bg">
+                    <div class="growth-bar-fill" style="width:8%;">10K</div>
+                </div>
+                <span class="growth-value">9.721 usuarios</span>
+            </div>
+            <div class="growth-item fade-up">
+                <span class="growth-label">Mes 15</span>
+                <div class="growth-bar-bg">
+                    <div class="growth-bar-fill" style="width:22%;">32K</div>
+                </div>
+                <span class="growth-value">31.976 usuarios</span>
+            </div>
+            <div class="growth-item fade-up">
+                <span class="growth-label">Mes 20</span>
+                <div class="growth-bar-bg">
+                    <div class="growth-bar-fill" style="width:55%;">90K</div>
+                </div>
+                <span class="growth-value">89.600 usuarios</span>
+            </div>
+            <div class="growth-item fade-up">
+                <span class="growth-label">Mes 24</span>
+                <div class="growth-bar-bg">
+                    <div class="growth-bar-fill" style="width:100%;">188K</div>
+                </div>
+                <span class="growth-value">188.000 usuarios</span>
+            </div>
+        </div>
+
+        <table class="projecoes-table" style="margin-top:50px;">
+            <thead>
+                <tr>
+                    <th>Periodo</th>
+                    <th>Downloads</th>
+                    <th>Usuarios Ativos</th>
+                    <th>Receita/mes</th>
+                    <th>Investido em Ads</th>
+                    <th>Marco</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>Jul/26 (Lancamento)</td>
+                    <td>200</td>
+                    <td>200</td>
+                    <td>-</td>
+                    <td>-</td>
+                    <td>Evento 200 corredores</td>
+                </tr>
+                <tr>
+                    <td>Dez/26 (Mes 5)</td>
+                    <td>2.110</td>
+                    <td>1.266</td>
+                    <td>R$ 1.899</td>
+                    <td>R$ 1.293</td>
+                    <td>2K downloads</td>
+                </tr>
+                <tr class="highlight-row">
+                    <td>Mai/27 (Mes 10)</td>
+                    <td>9.721</td>
+                    <td>5.833</td>
+                    <td>R$ 8.749</td>
+                    <td>R$ 6.699</td>
+                    <td>~10K downloads</td>
+                </tr>
+                <tr>
+                    <td>Jul/27 (1 ano)</td>
+                    <td>15.992</td>
+                    <td>9.595</td>
+                    <td>R$ 14.392</td>
+                    <td>R$ 11.280</td>
+                    <td>~16K - 1 ano</td>
+                </tr>
+                <tr class="highlight-row">
+                    <td>Out/27 (Mes 15)</td>
+                    <td>31.976</td>
+                    <td>19.186</td>
+                    <td>R$ 28.779</td>
+                    <td>R$ 22.967</td>
+                    <td>~32K downloads</td>
+                </tr>
+                <tr>
+                    <td>Jan/28 (Mes 18)</td>
+                    <td>60.100</td>
+                    <td>36.060</td>
+                    <td>R$ 54.090</td>
+                    <td>R$ 44.010</td>
+                    <td>60K downloads</td>
+                </tr>
+                <tr class="highlight-row">
+                    <td>Jul/28 (2 anos)</td>
+                    <td>188.000</td>
+                    <td>112.800</td>
+                    <td>R$ 169.200</td>
+                    <td>R$ 141.750</td>
+                    <td>188K - Para ads</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</section>
+
+<!-- ROI -->
+<section class="roi-section" id="roi">
+    <div class="container">
+        <div class="section-label" style="color:var(--primary)">Retorno do Investimento</div>
+        <h2 class="section-title">Lucro apos periodo de reinvestimento</h2>
+        <p class="section-desc">Apos 24 meses de reinvestimento total, a operacao gera lucro imediato com base instalada de 188K usuarios.</p>
+
+        <div class="roi-grid">
+            <div class="roi-card fade-up">
+                <h3>Lucro Mensal (Mes 25+)</h3>
+                <div class="big-number">R$ 170K</div>
+                <p>Receita liquida mensal sem investimento em ads</p>
+            </div>
+            <div class="roi-card fade-up">
+                <h3>Lucro Ano 3</h3>
+                <div class="big-number">R$ 1.7M</div>
+                <p>Lucro acumulado no primeiro ano pos-reinvestimento</p>
+            </div>
+            <div class="roi-card fade-up">
+                <h3>Lucro Acumulado (2 anos)</h3>
+                <div class="big-number">R$ 2.8M</div>
+                <p>Lucro total acumulado nos 2 anos apos parar ads</p>
+            </div>
+            <div class="roi-card fade-up">
+                <h3>ROAS (Return on Ad Spend)</h3>
+                <div class="big-number">3,4x</div>
+                <p>Cada R$ 1 investido retorna R$ 3,40 em receita</p>
+            </div>
+        </div>
+
+        <div class="valuation-banner fade-up" style="border-color:rgba(255,255,255,0.15);margin-top:50px;">
+            <h3 style="color:rgba(255,255,255,0.5)">Valuation Projetado (Mes 24)</h3>
+            <div class="val-number">R$ 5M - R$ 9M</div>
+            <p style="color:rgba(255,255,255,0.4)">Baseado em R$ 25 - R$ 50 por usuario ativo (benchmark apps sociais/fitness)</p>
+        </div>
+    </div>
+</section>
+
+<!-- TIMELINE / ROADMAP -->
+<section id="roadmap" style="background:var(--light);">
+    <div class="container">
+        <div class="section-label">Roadmap</div>
+        <h2 class="section-title">Plano de execucao</h2>
+        <p class="section-desc">Da ideia a escala nacional em 24 meses.</p>
+
+        <div class="timeline">
+            <div class="timeline-item fade-up">
+                <div class="timeline-dot"></div>
+                <div class="timeline-content">
+                    <div class="timeline-date">Jul 2026 - Lancamento</div>
+                    <h3>Evento Inaugural - 200 Corredores</h3>
+                    <p>Lancamento oficial com evento de corrida. Todos baixam o app. Cobertura Instagram e Strava.</p>
+                </div>
+            </div>
+            <div class="timeline-item fade-up">
+                <div class="timeline-dot"></div>
+                <div class="timeline-content">
+                    <div class="timeline-date">Dez 2026 - 5 meses</div>
+                    <h3>2.000 Downloads - Tracao Inicial</h3>
+                    <p>Crescimento organico + primeiros ads. Viral loop Instagram/Strava validado. CPI otimizado.</p>
+                </div>
+            </div>
+            <div class="timeline-item fade-up">
+                <div class="timeline-dot"></div>
+                <div class="timeline-content">
+                    <div class="timeline-date">Jul 2027 - 1 ano</div>
+                    <h3>16.000 Downloads - Product Market Fit</h3>
+                    <p>Lancamento MatchRun PRO. Primeiras parcerias com marcas esportivas. Receita R$ 14K/mes.</p>
+                </div>
+            </div>
+            <div class="timeline-item fade-up">
+                <div class="timeline-dot"></div>
+                <div class="timeline-content">
+                    <div class="timeline-date">Jan 2028 - 18 meses</div>
+                    <h3>60.000 Downloads - Escala</h3>
+                    <p>Expansao para principais capitais. Corridas patrocinadas por marcas. Receita R$ 54K/mes.</p>
+                </div>
+            </div>
+            <div class="timeline-item fade-up">
+                <div class="timeline-dot"></div>
+                <div class="timeline-content">
+                    <div class="timeline-date">Jul 2028 - 2 anos</div>
+                    <h3>188.000 Downloads - Lider Nacional</h3>
+                    <p>Maior plataforma de conexao entre corredores do Brasil. 112K ativos. Receita R$ 169K/mes. Pronto para Series A.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- TRACAO -->
+<section>
+    <div class="container">
+        <div class="section-label">Diferenciais Competitivos</div>
+        <h2 class="section-title">Por que MatchRun vai dominar</h2>
+
+        <div class="traction-grid">
+            <div class="traction-card fade-up">
+                <div class="icon">&#127919;</div>
+                <h3>First Mover Advantage</h3>
+                <p>Nao existe concorrente direto no Brasil. Quem chegar primeiro domina o mercado de nicho.</p>
+            </div>
+            <div class="traction-card fade-up">
+                <div class="icon">&#128200;</div>
+                <h3>Viral Loop Natural</h3>
+                <p>Cada corrida gera posts no Instagram e Strava. Usuarios trazem usuarios sem custo.</p>
+            </div>
+            <div class="traction-card fade-up">
+                <div class="icon">&#129309;</div>
+                <h3>Efeito de Rede</h3>
+                <p>Quanto mais usuarios, mais corridas disponiveis, mais valor pra todos. Barreira de entrada pra concorrentes.</p>
+            </div>
+            <div class="traction-card fade-up">
+                <div class="icon">&#128176;</div>
+                <h3>Unit Economics Forte</h3>
+                <p>CPI R$ 4 vs LTV R$ 18 (12 meses). Payback em 2,7 meses. Margem saudavel desde o inicio.</p>
+            </div>
+            <div class="traction-card fade-up">
+                <div class="icon">&#127757;</div>
+                <h3>Escalabilidade</h3>
+                <p>Modelo replicavel para qualquer cidade e pais. Potencial LATAM e global apos consolidar Brasil.</p>
+            </div>
+            <div class="traction-card fade-up">
+                <div class="icon">&#128170;</div>
+                <h3>Baixo Custo Operacional</h3>
+                <p>Stack serverless (Supabase). Custo de infra cresce proporcionalmente. Time enxuto.</p>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- INVESTIMENTO -->
+<section class="mercado" id="investimento">
+    <div class="container">
+        <div class="section-label" style="color:var(--primary)">Investimento</div>
+        <h2 class="section-title">Estamos captando</h2>
+        <p class="section-desc">Buscamos investidores estrategicos para acelerar o crescimento e consolidar a lideranca no mercado brasileiro.</p>
+
+        <div class="roi-grid">
+            <div class="roi-card">
+                <h3>Uso dos Recursos</h3>
+                <div style="margin-top:20px;">
+                    <div style="display:flex;justify-content:space-between;margin-bottom:12px;">
+                        <span style="color:rgba(255,255,255,0.8);font-size:15px;">Marketing & Ads</span>
+                        <span style="color:var(--primary);font-weight:700;">60%</span>
+                    </div>
+                    <div style="background:rgba(255,255,255,0.1);border-radius:8px;height:8px;margin-bottom:20px;">
+                        <div style="width:60%;height:100%;background:var(--gradient);border-radius:8px;"></div>
+                    </div>
+                    <div style="display:flex;justify-content:space-between;margin-bottom:12px;">
+                        <span style="color:rgba(255,255,255,0.8);font-size:15px;">Desenvolvimento (features)</span>
+                        <span style="color:var(--primary);font-weight:700;">20%</span>
+                    </div>
+                    <div style="background:rgba(255,255,255,0.1);border-radius:8px;height:8px;margin-bottom:20px;">
+                        <div style="width:20%;height:100%;background:var(--gradient);border-radius:8px;"></div>
+                    </div>
+                    <div style="display:flex;justify-content:space-between;margin-bottom:12px;">
+                        <span style="color:rgba(255,255,255,0.8);font-size:15px;">Eventos & Parcerias</span>
+                        <span style="color:var(--primary);font-weight:700;">15%</span>
+                    </div>
+                    <div style="background:rgba(255,255,255,0.1);border-radius:8px;height:8px;margin-bottom:20px;">
+                        <div style="width:15%;height:100%;background:var(--gradient);border-radius:8px;"></div>
+                    </div>
+                    <div style="display:flex;justify-content:space-between;margin-bottom:12px;">
+                        <span style="color:rgba(255,255,255,0.8);font-size:15px;">Operacional</span>
+                        <span style="color:var(--primary);font-weight:700;">5%</span>
+                    </div>
+                    <div style="background:rgba(255,255,255,0.1);border-radius:8px;height:8px;">
+                        <div style="width:5%;height:100%;background:var(--gradient);border-radius:8px;"></div>
+                    </div>
+                </div>
+            </div>
+            <div class="roi-card">
+                <h3>O que o Investidor Recebe</h3>
+                <div style="margin-top:20px;">
+                    <div style="margin-bottom:20px;padding-bottom:20px;border-bottom:1px solid rgba(255,255,255,0.1);">
+                        <div style="color:var(--primary);font-size:14px;font-weight:600;">Equity</div>
+                        <div style="color:white;font-size:16px;margin-top:5px;">Participacao societaria proporcional ao aporte</div>
+                    </div>
+                    <div style="margin-bottom:20px;padding-bottom:20px;border-bottom:1px solid rgba(255,255,255,0.1);">
+                        <div style="color:var(--primary);font-size:14px;font-weight:600;">Relatorios Mensais</div>
+                        <div style="color:white;font-size:16px;margin-top:5px;">Metricas de crescimento, receita e KPIs</div>
+                    </div>
+                    <div style="margin-bottom:20px;padding-bottom:20px;border-bottom:1px solid rgba(255,255,255,0.1);">
+                        <div style="color:var(--primary);font-size:14px;font-weight:600;">Assento no Board</div>
+                        <div style="color:white;font-size:16px;margin-top:5px;">Voz ativa nas decisoes estrategicas</div>
+                    </div>
+                    <div>
+                        <div style="color:var(--primary);font-size:14px;font-weight:600;">Potencial de Exit</div>
+                        <div style="color:white;font-size:16px;margin-top:5px;">Valuation projetado de R$ 5-9M em 24 meses</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- CTA -->
+<section class="cta">
+    <h2>Vamos correr juntos?</h2>
+    <p>MatchRun esta pronto para escalar. O mercado esta aberto. A oportunidade e agora.</p>
+    <a href="mailto:juliolemosdf@gmail.com?subject=Investimento%20MatchRun%20-%20Interesse" class="cta-btn">Falar com o Fundador</a>
+    <p style="margin-top:20px;font-size:14px;opacity:0.7;">juliolemosdf@gmail.com</p>
+</section>
+
+<!-- FOOTER -->
+<footer>
+    <p>MatchRun &copy; 2026 - Documento confidencial para fins de investimento</p>
+</footer>
+
+<script>
+    // Scroll animation
+    var observer = new IntersectionObserver(function(entries) {
+        entries.forEach(function(entry) {
+            if (entry.isIntersecting) {
+                entry.target.classList.add('visible');
+            }
+        });
+    }, { threshold: 0.1 });
+
+    document.querySelectorAll('.fade-up').forEach(function(el) {
+        observer.observe(el);
+    });
+
+    // Smooth scroll for nav links
+    document.querySelectorAll('a[href^="#"]').forEach(function(anchor) {
+        anchor.addEventListener('click', function(e) {
+            e.preventDefault();
+            var target = document.querySelector(this.getAttribute('href'));
+            if (target) {
+                target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+            }
+        });
+    });
+
+    // Animate growth bars on scroll
+    var barsObserver = new IntersectionObserver(function(entries) {
+        entries.forEach(function(entry) {
+            if (entry.isIntersecting) {
+                var bars = entry.target.querySelectorAll('.growth-bar-fill');
+                bars.forEach(function(bar, i) {
+                    setTimeout(function() {
+                        bar.style.width = bar.style.width;
+                    }, i * 150);
+                });
+            }
+        });
+    }, { threshold: 0.3 });
+
+    var growthSection = document.querySelector('.growth-bars');
+    if (growthSection) barsObserver.observe(growthSection);
+</script>
+
+</body>
+</html>

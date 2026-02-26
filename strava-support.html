@@ -1,0 +1,235 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>MatchRun - Strava Integration Support</title>
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+      background: #0F172A;
+      color: #E2E8F0;
+      min-height: 100vh;
+      padding: 24px;
+    }
+    .container {
+      max-width: 640px;
+      margin: 0 auto;
+      padding: 40px 0;
+    }
+    .logo {
+      text-align: center;
+      margin-bottom: 32px;
+    }
+    .logo-icon { font-size: 48px; }
+    .logo-title {
+      font-size: 28px;
+      font-weight: 800;
+      color: #FF6B35;
+      margin-top: 8px;
+    }
+    .logo-sub {
+      font-size: 14px;
+      color: #94A3B8;
+      margin-top: 4px;
+    }
+    h2 {
+      font-size: 20px;
+      font-weight: 700;
+      color: #fff;
+      margin: 32px 0 16px;
+      padding-bottom: 8px;
+      border-bottom: 1px solid #1E293B;
+    }
+    .section {
+      background: #1E293B;
+      border-radius: 12px;
+      padding: 20px;
+      margin-bottom: 16px;
+    }
+    .section h3 {
+      font-size: 16px;
+      font-weight: 600;
+      color: #FF6B35;
+      margin-bottom: 8px;
+    }
+    .section p, .section li {
+      font-size: 14px;
+      color: #CBD5E1;
+      line-height: 1.7;
+    }
+    .section ul {
+      padding-left: 20px;
+      margin-top: 8px;
+    }
+    .section li { margin-bottom: 6px; }
+    .steps {
+      counter-reset: step;
+      list-style: none;
+      padding-left: 0;
+    }
+    .steps li {
+      counter-increment: step;
+      position: relative;
+      padding-left: 36px;
+      margin-bottom: 12px;
+    }
+    .steps li::before {
+      content: counter(step);
+      position: absolute;
+      left: 0;
+      top: 0;
+      width: 24px;
+      height: 24px;
+      background: #FF6B35;
+      color: #fff;
+      border-radius: 50%;
+      font-size: 13px;
+      font-weight: 700;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      line-height: 24px;
+    }
+    .badge {
+      display: inline-block;
+      background: #FF6B35;
+      color: #fff;
+      font-size: 11px;
+      font-weight: 700;
+      padding: 2px 8px;
+      border-radius: 4px;
+      text-transform: uppercase;
+      margin-left: 6px;
+    }
+    a {
+      color: #FF6B35;
+      text-decoration: none;
+    }
+    a:hover { text-decoration: underline; }
+    .contact-box {
+      background: linear-gradient(135deg, #1E293B, #0F172A);
+      border: 1px solid #334155;
+      border-radius: 12px;
+      padding: 24px;
+      text-align: center;
+      margin-top: 32px;
+    }
+    .contact-box p {
+      font-size: 14px;
+      color: #94A3B8;
+      margin-top: 8px;
+    }
+    .contact-box a {
+      font-size: 16px;
+      font-weight: 700;
+    }
+    .footer {
+      text-align: center;
+      margin-top: 40px;
+      padding-top: 20px;
+      border-top: 1px solid #1E293B;
+      font-size: 12px;
+      color: #64748B;
+    }
+    .strava-badge {
+      display: inline-block;
+      margin-top: 12px;
+      padding: 8px 16px;
+      background: #FC4C02;
+      color: #fff;
+      font-weight: 700;
+      border-radius: 8px;
+      font-size: 13px;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+
+    <div class="logo">
+      <div class="logo-icon">🏃</div>
+      <div class="logo-title">MatchRun</div>
+      <div class="logo-sub">Strava Integration Support</div>
+    </div>
+
+    <h2>What is MatchRun?</h2>
+    <div class="section">
+      <p>MatchRun is a mobile app that helps runners find nearby running partners and groups. Users can create or join group runs based on location, pace, and distance. Connecting your Strava account enhances your profile by displaying your recent running activities.</p>
+    </div>
+
+    <h2>How We Use Your Strava Data</h2>
+    <div class="section">
+      <h3>Data we access</h3>
+      <ul>
+        <li>Your recent running activities (distance, pace, time, elevation)</li>
+        <li>Your Strava athlete ID (to link your account)</li>
+      </ul>
+    </div>
+    <div class="section">
+      <h3>How we use it</h3>
+      <ul>
+        <li>Display your running activities on your MatchRun profile so other runners can see your training history</li>
+        <li>Show a verified runner badge on connected profiles</li>
+      </ul>
+    </div>
+    <div class="section">
+      <h3>What we do NOT do</h3>
+      <ul>
+        <li>We never sell, share, or redistribute your Strava data to third parties</li>
+        <li>We never store your raw activity data permanently — it is fetched on-demand</li>
+        <li>We never post, modify, or delete anything on your Strava account</li>
+        <li>We never compete with or replicate Strava's core features</li>
+      </ul>
+    </div>
+
+    <h2>How to Connect / Disconnect Strava</h2>
+    <div class="section">
+      <h3>To connect</h3>
+      <ol class="steps">
+        <li>Open MatchRun and go to your <strong>Profile</strong> tab</li>
+        <li>Tap <strong>"Connect Strava"</strong> (orange button)</li>
+        <li>You will be redirected to Strava's website to authorize MatchRun</li>
+        <li>After authorizing, you will be redirected back to the app automatically</li>
+      </ol>
+    </div>
+    <div class="section">
+      <h3>To disconnect</h3>
+      <ol class="steps">
+        <li>Open MatchRun and go to your <strong>Profile</strong> tab</li>
+        <li>Scroll to the <strong>Strava</strong> section</li>
+        <li>Tap <strong>"Disconnect"</strong> — your Strava data will be removed from MatchRun immediately</li>
+      </ol>
+      <p style="margin-top: 12px;">You can also revoke access directly from Strava: go to <a href="https://www.strava.com/settings/apps" target="_blank">strava.com/settings/apps</a> and remove MatchRun.</p>
+    </div>
+
+    <h2>Troubleshooting</h2>
+    <div class="section">
+      <h3>Connection failed or "disallowed_useragent" error</h3>
+      <p>Make sure you are running the latest version of MatchRun. The app opens Safari for Strava login — if you see an error, try again or restart the app.</p>
+    </div>
+    <div class="section">
+      <h3>Activities not showing</h3>
+      <p>Only running activities are displayed. Make sure your Strava activities are set to visible (not private). Try disconnecting and reconnecting your Strava account.</p>
+    </div>
+    <div class="section">
+      <h3>Want to delete your account and data?</h3>
+      <p>Go to <strong>Profile → Delete Account</strong> in the app. All your data, including Strava tokens, will be permanently removed.</p>
+    </div>
+
+    <h2>Contact Support</h2>
+    <div class="contact-box">
+      <a href="mailto:suporte@correcaodesolo.com.br">suporte@correcaodesolo.com.br</a>
+      <p>We typically respond within 24 hours.</p>
+    </div>
+
+    <div class="footer">
+      <p>MatchRun &copy; 2025. All rights reserved.</p>
+      <p style="margin-top: 8px;">Built with data from <span class="strava-badge">Powered by Strava</span></p>
+    </div>
+
+  </div>
+</body>
+</html>

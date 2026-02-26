@@ -1,0 +1,786 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Checklist de Publicacao - MatchRun | App Store & Google Play</title>
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+      background: #F7F7F7;
+      color: #1A1A2E;
+      line-height: 1.7;
+    }
+    .hero {
+      background: linear-gradient(135deg, #FF6B35 0%, #E55A2B 60%, #D14A1F 100%);
+      color: #fff;
+      padding: 60px 24px 44px;
+      text-align: center;
+    }
+    .hero h1 { font-size: 28px; font-weight: 800; margin-bottom: 8px; }
+    .hero p { font-size: 15px; opacity: 0.9; max-width: 480px; margin: 0 auto; }
+    .container { max-width: 800px; margin: 0 auto; padding: 32px 24px 60px; }
+
+    /* Progress bar */
+    .progress-bar { background: #E5E7EB; border-radius: 8px; height: 12px; margin-bottom: 32px; overflow: hidden; }
+    .progress-fill { background: linear-gradient(90deg, #FF6B35, #22C55E); height: 100%; border-radius: 8px; width: 0%; transition: width 0.4s ease; }
+    .progress-text { text-align: center; font-size: 14px; color: #6B7280; margin-top: -24px; margin-bottom: 28px; font-weight: 600; }
+
+    /* Sections */
+    .section { margin-bottom: 32px; }
+    .section-header {
+      display: flex; align-items: center; gap: 12px;
+      padding: 16px 20px;
+      background: #fff;
+      border-radius: 16px 16px 0 0;
+      border: 1px solid #E5E7EB;
+      border-bottom: 2px solid #FF6B35;
+    }
+    .section-icon { font-size: 24px; }
+    .section-title { font-size: 18px; font-weight: 700; color: #1A1A2E; }
+    .section-badge {
+      margin-left: auto; font-size: 12px; font-weight: 700;
+      padding: 3px 10px; border-radius: 12px;
+    }
+    .badge-apple { background: #000; color: #fff; }
+    .badge-google { background: #34A853; color: #fff; }
+    .badge-both { background: #FF6B35; color: #fff; }
+
+    /* Checklist items */
+    .checklist { border: 1px solid #E5E7EB; border-top: 0; border-radius: 0 0 16px 16px; overflow: hidden; }
+    .check-item {
+      display: flex; align-items: flex-start; gap: 14px;
+      padding: 16px 20px;
+      background: #fff;
+      border-bottom: 1px solid #f0f0f0;
+      cursor: pointer;
+      transition: background 0.15s;
+    }
+    .check-item:last-child { border-bottom: 0; }
+    .check-item:hover { background: #FAFAFA; }
+    .check-item.checked { background: #F0FDF4; }
+    .check-box {
+      width: 24px; height: 24px; min-width: 24px;
+      border: 2px solid #D1D5DB; border-radius: 6px;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 14px; color: transparent; transition: all 0.2s;
+      margin-top: 2px;
+    }
+    .check-item.checked .check-box {
+      background: #22C55E; border-color: #22C55E; color: #fff;
+    }
+    .check-content { flex: 1; }
+    .check-title { font-size: 15px; font-weight: 600; color: #1A1A2E; margin-bottom: 4px; }
+    .check-item.checked .check-title { text-decoration: line-through; color: #9CA3AF; }
+    .check-desc { font-size: 13px; color: #6B7280; line-height: 1.5; }
+    .check-item.checked .check-desc { color: #9CA3AF; }
+
+    /* SEO / Description boxes */
+    .desc-box {
+      background: #fff; border: 1px solid #E5E7EB; border-radius: 16px;
+      padding: 24px; margin-bottom: 24px;
+    }
+    .desc-box h3 {
+      font-size: 16px; font-weight: 700; color: #FF6B35;
+      margin-bottom: 12px; display: flex; align-items: center; gap: 8px;
+    }
+    .desc-box h4 { font-size: 14px; font-weight: 700; color: #1A1A2E; margin: 16px 0 8px; }
+    .desc-box pre {
+      background: #F9FAFB; border: 1px solid #E5E7EB; border-radius: 10px;
+      padding: 16px; font-size: 13px; line-height: 1.6; white-space: pre-wrap;
+      word-wrap: break-word; font-family: 'SF Mono', Monaco, 'Cascadia Code', monospace;
+      color: #374151; max-height: 400px; overflow-y: auto;
+    }
+    .copy-btn {
+      display: inline-flex; align-items: center; gap: 6px;
+      background: #FF6B35; color: #fff; border: 0; border-radius: 8px;
+      padding: 8px 16px; font-size: 13px; font-weight: 600;
+      cursor: pointer; margin-top: 10px; transition: background 0.2s;
+    }
+    .copy-btn:hover { background: #E55A2B; }
+    .copy-btn.copied { background: #22C55E; }
+
+    /* Keywords */
+    .keyword-tags { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 8px; }
+    .keyword-tag {
+      background: #FFF3ED; color: #FF6B35; font-size: 12px; font-weight: 600;
+      padding: 4px 10px; border-radius: 6px; border: 1px solid #FF6B3530;
+    }
+
+    /* Info callout */
+    .callout {
+      background: #EFF6FF; border: 1px solid #BFDBFE; border-radius: 12px;
+      padding: 16px 20px; margin: 20px 0; font-size: 14px; color: #1E40AF;
+    }
+    .callout strong { display: block; margin-bottom: 4px; }
+    .callout-warn {
+      background: #FFF7ED; border-color: #FED7AA; color: #9A3412;
+    }
+
+    .footer {
+      text-align: center; padding: 32px 24px; color: #6B7280;
+      font-size: 13px; border-top: 1px solid #E5E7EB; margin-top: 32px;
+    }
+
+    @media (max-width: 480px) {
+      .hero { padding: 48px 20px 36px; }
+      .hero h1 { font-size: 22px; }
+      .container { padding: 24px 16px 48px; }
+      .section-header { padding: 14px 16px; }
+      .check-item { padding: 14px 16px; }
+      .desc-box pre { font-size: 12px; padding: 12px; }
+    }
+  </style>
+</head>
+<body>
+
+<div class="hero">
+  <h1>Checklist de Publicacao</h1>
+  <p>Tudo que voce precisa para publicar o MatchRun na App Store e Google Play</p>
+</div>
+
+<div class="container">
+
+  <div class="progress-bar"><div class="progress-fill" id="progressFill"></div></div>
+  <p class="progress-text" id="progressText">0 de 0 concluidos</p>
+
+  <!-- ============================================ -->
+  <!-- SECAO 1: CONTAS DE DESENVOLVEDOR -->
+  <!-- ============================================ -->
+  <div class="section">
+    <div class="section-header">
+      <span class="section-icon">🔑</span>
+      <span class="section-title">1. Contas de Desenvolvedor</span>
+      <span class="section-badge badge-both">Ambas</span>
+    </div>
+    <div class="checklist">
+      <div class="check-item" onclick="toggleCheck(this)">
+        <div class="check-box">✓</div>
+        <div class="check-content">
+          <div class="check-title">Criar conta Apple Developer Program</div>
+          <div class="check-desc">Acesse developer.apple.com, pague a taxa anual de US$99 e aguarde aprovacao (pode levar 24-48h). Necessario ter Apple ID.</div>
+        </div>
+      </div>
+      <div class="check-item" onclick="toggleCheck(this)">
+        <div class="check-box">✓</div>
+        <div class="check-content">
+          <div class="check-title">Criar conta Google Play Console</div>
+          <div class="check-desc">Acesse play.google.com/console, pague a taxa unica de US$25 e preencha os dados do desenvolvedor.</div>
+        </div>
+      </div>
+      <div class="check-item" onclick="toggleCheck(this)">
+        <div class="check-box">✓</div>
+        <div class="check-content">
+          <div class="check-title">Criar conta EAS (Expo Application Services)</div>
+          <div class="check-desc">Execute <code>npx eas-cli login</code> e depois <code>npx eas build:configure</code> para configurar os builds na nuvem.</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ============================================ -->
+  <!-- SECAO 2: ASSETS VISUAIS -->
+  <!-- ============================================ -->
+  <div class="section">
+    <div class="section-header">
+      <span class="section-icon">🎨</span>
+      <span class="section-title">2. Assets Visuais (Icones e Screenshots)</span>
+      <span class="section-badge badge-both">Ambas</span>
+    </div>
+    <div class="checklist">
+      <div class="check-item" onclick="toggleCheck(this)">
+        <div class="check-box">✓</div>
+        <div class="check-content">
+          <div class="check-title">Icone do app (1024x1024px)</div>
+          <div class="check-desc">PNG sem transparencia, sem cantos arredondados (as lojas aplicam automaticamente). Salvar em <code>assets/icon.png</code>.</div>
+        </div>
+      </div>
+      <div class="check-item" onclick="toggleCheck(this)">
+        <div class="check-box">✓</div>
+        <div class="check-content">
+          <div class="check-title">Screenshots iPhone 6.7" (1290x2796px) - minimo 3</div>
+          <div class="check-desc">Obrigatorio para App Store. Capture as telas principais: Feed de corridas, Detalhes da corrida, Perfil com Strava, Chat do grupo.</div>
+        </div>
+      </div>
+      <div class="check-item" onclick="toggleCheck(this)">
+        <div class="check-box">✓</div>
+        <div class="check-content">
+          <div class="check-title">Screenshots iPhone 6.5" (1284x2778px) - minimo 3</div>
+          <div class="check-desc">Obrigatorio para modelos mais antigos do iPhone na App Store.</div>
+        </div>
+      </div>
+      <div class="check-item" onclick="toggleCheck(this)">
+        <div class="check-box">✓</div>
+        <div class="check-content">
+          <div class="check-title">Screenshots iPad 12.9" (2048x2732px) - se suporta tablet</div>
+          <div class="check-desc">Obrigatorio se <code>supportsTablet: true</code> no app.json. Caso contrario, desative o suporte.</div>
+        </div>
+      </div>
+      <div class="check-item" onclick="toggleCheck(this)">
+        <div class="check-box">✓</div>
+        <div class="check-content">
+          <div class="check-title">Screenshots Android (min 2, recomendado 4-8)</div>
+          <div class="check-desc">Minimo 320px, maximo 3840px. Use resolucao de telefone comum (1080x1920px ou 1080x2340px).</div>
+        </div>
+      </div>
+      <div class="check-item" onclick="toggleCheck(this)">
+        <div class="check-box">✓</div>
+        <div class="check-content">
+          <div class="check-title">Feature Graphic Google Play (1024x500px)</div>
+          <div class="check-desc">Banner obrigatorio do Google Play. Aparece no topo da listagem. Use imagem chamativa com logo e slogan.</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ============================================ -->
+  <!-- SECAO 3: CONFIGURACAO DO BUILD -->
+  <!-- ============================================ -->
+  <div class="section">
+    <div class="section-header">
+      <span class="section-icon">⚙️</span>
+      <span class="section-title">3. Configuracao do Build</span>
+      <span class="section-badge badge-both">Ambas</span>
+    </div>
+    <div class="checklist">
+      <div class="check-item" onclick="toggleCheck(this)">
+        <div class="check-box">✓</div>
+        <div class="check-content">
+          <div class="check-title">Configurar eas.json</div>
+          <div class="check-desc">Execute <code>npx eas build:configure</code> para gerar o <code>eas.json</code>. Configure os profiles "production" para iOS e Android.</div>
+        </div>
+      </div>
+      <div class="check-item" onclick="toggleCheck(this)">
+        <div class="check-box">✓</div>
+        <div class="check-content">
+          <div class="check-title">Atualizar project ID no app.json</div>
+          <div class="check-desc">Substitua <code>"your-project-id"</code> no campo <code>extra.eas.projectId</code> pelo ID real do projeto EAS.</div>
+        </div>
+      </div>
+      <div class="check-item" onclick="toggleCheck(this)">
+        <div class="check-box">✓</div>
+        <div class="check-content">
+          <div class="check-title">Definir variaveis de ambiente no EAS</div>
+          <div class="check-desc">Configure as secrets no EAS: <code>EXPO_PUBLIC_SUPABASE_URL</code>, <code>EXPO_PUBLIC_SUPABASE_ANON_KEY</code>, <code>EXPO_PUBLIC_STRAVA_CLIENT_ID</code>, <code>EXPO_PUBLIC_STRAVA_CLIENT_SECRET</code>.</div>
+        </div>
+      </div>
+      <div class="check-item" onclick="toggleCheck(this)">
+        <div class="check-box">✓</div>
+        <div class="check-content">
+          <div class="check-title">Build iOS - gerar .ipa</div>
+          <div class="check-desc">Execute <code>npx eas build --platform ios --profile production</code>. Primeira vez pedira para gerar certificados automaticamente.</div>
+        </div>
+      </div>
+      <div class="check-item" onclick="toggleCheck(this)">
+        <div class="check-box">✓</div>
+        <div class="check-content">
+          <div class="check-title">Build Android - gerar .aab</div>
+          <div class="check-desc">Execute <code>npx eas build --platform android --profile production</code>. Gera o Android App Bundle (.aab) exigido pelo Google Play.</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ============================================ -->
+  <!-- SECAO 4: DESCRICAO E SEO -->
+  <!-- ============================================ -->
+  <div class="section">
+    <div class="section-header">
+      <span class="section-icon">📝</span>
+      <span class="section-title">4. Descricao e SEO para as Lojas</span>
+      <span class="section-badge badge-both">Ambas</span>
+    </div>
+    <div class="checklist">
+      <div class="check-item" onclick="toggleCheck(this)">
+        <div class="check-box">✓</div>
+        <div class="check-content">
+          <div class="check-title">Copiar e colar os textos prontos abaixo nas lojas</div>
+          <div class="check-desc">Todos os textos ja estao otimizados para SEO e em conformidade com as politicas das lojas.</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- NOME DO APP -->
+  <div class="desc-box">
+    <h3>📌 Nome do App (max 30 caracteres)</h3>
+    <pre id="appName">MatchRun - Grupos de Corrida</pre>
+    <button class="copy-btn" onclick="copyText('appName', this)">📋 Copiar</button>
+  </div>
+
+  <!-- SUBTITULO iOS -->
+  <div class="desc-box">
+    <h3>📌 Subtitulo (App Store - max 30 caracteres)</h3>
+    <pre id="appSubtitle">Encontre corredores perto</pre>
+    <button class="copy-btn" onclick="copyText('appSubtitle', this)">📋 Copiar</button>
+  </div>
+
+  <!-- DESCRICAO CURTA -->
+  <div class="desc-box">
+    <h3>📌 Descricao Curta (Google Play - max 80 caracteres)</h3>
+    <pre id="shortDesc">Encontre grupos de corrida perto de voce. Corra acompanhado, com seguranca!</pre>
+    <button class="copy-btn" onclick="copyText('shortDesc', this)">📋 Copiar</button>
+  </div>
+
+  <!-- DESCRICAO LONGA -->
+  <div class="desc-box">
+    <h3>📌 Descricao Completa (ambas as lojas - max 4000 caracteres)</h3>
+    <pre id="fullDesc">Cansou de correr sozinho? O MatchRun conecta voce a grupos de corrida na sua regiao. Descubra corridas proximas, conheca outros corredores e transforme seu treino.
+
+POR QUE CORRER EM GRUPO?
+
+Correr acompanhado muda tudo. Estudos mostram que corredores em grupo mantem a consistencia 3x mais do que quem treina sozinho. Com o MatchRun voce encontra motivacao, companhia e seguranca para cada km.
+
+- Motivacao real: Quando o despertador toca cedo, saber que um grupo te espera faz toda a diferenca
+- Evolucao mais rapida: Corra com pessoas de ritmos variados e melhore naturalmente seu pace
+- Seguranca: Corra acompanhado, em locais publicos, com pessoas verificadas
+- Comunidade: Faca amigos que compartilham a mesma paixao por corrida
+- Compromisso: Grupos criam responsabilidade e disciplina nos treinos
+
+COMO FUNCIONA
+
+1. Crie sua conta e conecte seu Strava para verificar seu perfil
+2. Veja corridas proximas no mapa e deslize para participar
+3. Entre no grupo, converse no chat e combine os detalhes
+4. Va correr, conheca pessoas incriveis e evolua junto
+
+FUNCIONALIDADES
+
+- Descubra corridas proximas por localizacao e raio de busca
+- Crie suas proprias corridas com data, horario, distancia e pace
+- Chat em tempo real com os participantes do grupo
+- Perfis verificados com integracao Strava
+- Historico de corridas do Strava no perfil
+- Filtros por distancia, ritmo e horario
+- Dicas de seguranca integradas no app
+
+SEGURANCA EM PRIMEIRO LUGAR
+
+O MatchRun leva sua seguranca a serio:
+- Perfis verificados com selo Strava (historico real de corridas)
+- Dicas de seguranca obrigatorias no primeiro acesso
+- Recomendacoes para avisar familiares e escolher locais publicos
+- Funcionalidade de denuncia para perfis suspeitos
+
+PARA TODOS OS NIVEIS
+
+Nao importa se voce esta comecando a correr ou treinando para uma maratona. No MatchRun voce encontra grupos para todos os ritmos e distancias - de caminhadas leves de 3 km a longoes de 30 km+.
+
+Comece agora. Encontre seu grupo. Corra mais longe, junto.</pre>
+    <button class="copy-btn" onclick="copyText('fullDesc', this)">📋 Copiar</button>
+  </div>
+
+  <!-- KEYWORDS -->
+  <div class="desc-box">
+    <h3>🔑 Keywords / Tags (App Store - max 100 caracteres, separadas por virgula)</h3>
+    <pre id="keywords">corrida,correr,grupo,running,treino,pace,strava,maratona,5k,10k,21k,corredores,esporte</pre>
+    <button class="copy-btn" onclick="copyText('keywords', this)">📋 Copiar</button>
+    <h4>Palavras-chave estrategicas:</h4>
+    <div class="keyword-tags">
+      <span class="keyword-tag">grupo de corrida</span>
+      <span class="keyword-tag">correr acompanhado</span>
+      <span class="keyword-tag">corrida em grupo</span>
+      <span class="keyword-tag">encontrar corredores</span>
+      <span class="keyword-tag">treino de corrida</span>
+      <span class="keyword-tag">running club</span>
+      <span class="keyword-tag">pace corrida</span>
+      <span class="keyword-tag">strava</span>
+      <span class="keyword-tag">corrida perto de mim</span>
+      <span class="keyword-tag">maratona</span>
+      <span class="keyword-tag">5k 10k 21k</span>
+      <span class="keyword-tag">parceiro de corrida</span>
+    </div>
+  </div>
+
+  <!-- PROMOTIONAL TEXT -->
+  <div class="desc-box">
+    <h3>📌 Texto Promocional (App Store - max 170 caracteres)</h3>
+    <pre id="promoText">Encontre grupos de corrida perto de voce! Conecte seu Strava, descubra corridas e corra acompanhado. Mais motivacao, seguranca e diversao em cada km.</pre>
+    <button class="copy-btn" onclick="copyText('promoText', this)">📋 Copiar</button>
+  </div>
+
+  <!-- ============================================ -->
+  <!-- SECAO 5: APP STORE CONNECT (iOS) -->
+  <!-- ============================================ -->
+  <div class="section">
+    <div class="section-header">
+      <span class="section-icon">🍎</span>
+      <span class="section-title">5. App Store Connect (iOS)</span>
+      <span class="section-badge badge-apple">Apple</span>
+    </div>
+    <div class="checklist">
+      <div class="check-item" onclick="toggleCheck(this)">
+        <div class="check-box">✓</div>
+        <div class="check-content">
+          <div class="check-title">Criar App no App Store Connect</div>
+          <div class="check-desc">Acesse appstoreconnect.apple.com > My Apps > + New App. Preencha nome, idioma principal (Portugues), Bundle ID (com.MatchRun.app), SKU.</div>
+        </div>
+      </div>
+      <div class="check-item" onclick="toggleCheck(this)">
+        <div class="check-box">✓</div>
+        <div class="check-content">
+          <div class="check-title">Preencher informacoes da versao</div>
+          <div class="check-desc">Na aba "App Information": subtitulo, categoria primaria (Saude e Fitness), categoria secundaria (Social). Na aba da versao: descricao, keywords, screenshots, texto promocional.</div>
+        </div>
+      </div>
+      <div class="check-item" onclick="toggleCheck(this)">
+        <div class="check-box">✓</div>
+        <div class="check-content">
+          <div class="check-title">URL da Politica de Privacidade</div>
+          <div class="check-desc">Cole a URL publica do <code>privacy.html</code>. Obrigatorio para aprovacao. Hospede em seu dominio ou use GitHub Pages.</div>
+        </div>
+      </div>
+      <div class="check-item" onclick="toggleCheck(this)">
+        <div class="check-box">✓</div>
+        <div class="check-content">
+          <div class="check-title">URL dos Termos de Uso</div>
+          <div class="check-desc">Cole a URL publica do <code>terms.html</code>.</div>
+        </div>
+      </div>
+      <div class="check-item" onclick="toggleCheck(this)">
+        <div class="check-box">✓</div>
+        <div class="check-content">
+          <div class="check-title">URL de Suporte</div>
+          <div class="check-desc">Pode ser o mesmo dominio com pagina de contato, ou email direto: contato@matchrun.app.</div>
+        </div>
+      </div>
+      <div class="check-item" onclick="toggleCheck(this)">
+        <div class="check-box">✓</div>
+        <div class="check-content">
+          <div class="check-title">Classificacao etaria (Age Rating)</div>
+          <div class="check-desc">Preencha o questionario. Para o MatchRun: sem violencia, sem conteudo sexual, sem jogos de azar. Resultado esperado: 4+ ou 12+ (por ser social/encontro).</div>
+        </div>
+      </div>
+      <div class="check-item" onclick="toggleCheck(this)">
+        <div class="check-box">✓</div>
+        <div class="check-content">
+          <div class="check-title">App Privacy (Nutrition Labels)</div>
+          <div class="check-desc">Declare os dados coletados: Email (vinculado a identidade), Nome (vinculado), Fotos (vinculado), Localizacao precisa (nao vinculado), Identificadores (Device ID). Marque "Funcionalidade do app" como finalidade.</div>
+        </div>
+      </div>
+      <div class="check-item" onclick="toggleCheck(this)">
+        <div class="check-box">✓</div>
+        <div class="check-content">
+          <div class="check-title">Notas para revisao da Apple</div>
+          <div class="check-desc">Forneca credenciais de teste (email/senha de uma conta de demonstracao) e explique brevemente o fluxo do app. Isso acelera a revisao.</div>
+        </div>
+      </div>
+      <div class="check-item" onclick="toggleCheck(this)">
+        <div class="check-box">✓</div>
+        <div class="check-content">
+          <div class="check-title">Enviar build via EAS Submit</div>
+          <div class="check-desc">Execute <code>npx eas submit --platform ios</code>. Ele pede seu Apple ID e sobe o .ipa para o App Store Connect automaticamente.</div>
+        </div>
+      </div>
+      <div class="check-item" onclick="toggleCheck(this)">
+        <div class="check-box">✓</div>
+        <div class="check-content">
+          <div class="check-title">Submeter para revisao</div>
+          <div class="check-desc">No App Store Connect, selecione o build, revise tudo e clique "Submit for Review". Tempo medio: 24-48h (pode levar ate 7 dias na primeira vez).</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="callout">
+    <strong>Dica Apple</strong>
+    A Apple rejeita apps que: nao tem funcionalidade minima (MVP precisa estar funcional), pedem permissoes sem justificativa clara, ou nao tem conta de teste para revisao. O MatchRun ja cobre todos esses pontos.
+  </div>
+
+  <!-- ============================================ -->
+  <!-- SECAO 6: GOOGLE PLAY CONSOLE (Android) -->
+  <!-- ============================================ -->
+  <div class="section">
+    <div class="section-header">
+      <span class="section-icon">🤖</span>
+      <span class="section-title">6. Google Play Console (Android)</span>
+      <span class="section-badge badge-google">Google</span>
+    </div>
+    <div class="checklist">
+      <div class="check-item" onclick="toggleCheck(this)">
+        <div class="check-box">✓</div>
+        <div class="check-content">
+          <div class="check-title">Criar App no Google Play Console</div>
+          <div class="check-desc">Play Console > All Apps > Create App. Preencha: nome, idioma padrao (pt-BR), tipo (App), gratis/pago.</div>
+        </div>
+      </div>
+      <div class="check-item" onclick="toggleCheck(this)">
+        <div class="check-box">✓</div>
+        <div class="check-content">
+          <div class="check-title">Preencher Store Listing</div>
+          <div class="check-desc">Titulo, descricao curta, descricao completa, icone, feature graphic, screenshots. Use os textos SEO acima.</div>
+        </div>
+      </div>
+      <div class="check-item" onclick="toggleCheck(this)">
+        <div class="check-box">✓</div>
+        <div class="check-content">
+          <div class="check-title">Content Rating (IARC)</div>
+          <div class="check-desc">Preencha o questionario IARC. Marque: comunicacao entre usuarios (chat), compartilhamento de localizacao. Resultado esperado: Livre ou 12+.</div>
+        </div>
+      </div>
+      <div class="check-item" onclick="toggleCheck(this)">
+        <div class="check-box">✓</div>
+        <div class="check-content">
+          <div class="check-title">Data Safety (Seguranca dos dados)</div>
+          <div class="check-desc">Declare: coleta de email, nome, fotos, localizacao. Dados compartilhados com Supabase (infraestrutura) e Strava (funcionalidade). Dados nao vendidos. Criptografia em transito. Usuarios podem solicitar exclusao.</div>
+        </div>
+      </div>
+      <div class="check-item" onclick="toggleCheck(this)">
+        <div class="check-box">✓</div>
+        <div class="check-content">
+          <div class="check-title">URL da Politica de Privacidade</div>
+          <div class="check-desc">Mesma URL da Apple. Obrigatorio. Precisa estar acessivel publicamente.</div>
+        </div>
+      </div>
+      <div class="check-item" onclick="toggleCheck(this)">
+        <div class="check-box">✓</div>
+        <div class="check-content">
+          <div class="check-title">Target Audience (Publico-alvo)</div>
+          <div class="check-desc">Selecione: 18+ (o app exige confirmacao de idade). NAO e direcionado a criancas (COPPA compliance).</div>
+        </div>
+      </div>
+      <div class="check-item" onclick="toggleCheck(this)">
+        <div class="check-box">✓</div>
+        <div class="check-content">
+          <div class="check-title">Categoria e tags</div>
+          <div class="check-desc">Categoria: Saude e fitness. Tags: corrida, fitness, social, esporte, grupo de corrida.</div>
+        </div>
+      </div>
+      <div class="check-item" onclick="toggleCheck(this)">
+        <div class="check-box">✓</div>
+        <div class="check-content">
+          <div class="check-title">Paises e precos</div>
+          <div class="check-desc">Selecione "Gratis" e os paises onde deseja distribuir (comece pelo Brasil).</div>
+        </div>
+      </div>
+      <div class="check-item" onclick="toggleCheck(this)">
+        <div class="check-box">✓</div>
+        <div class="check-content">
+          <div class="check-title">Enviar build via EAS Submit</div>
+          <div class="check-desc">Execute <code>npx eas submit --platform android</code>. Precisara de uma service account key do Google Cloud. Siga o guia do EAS para configurar.</div>
+        </div>
+      </div>
+      <div class="check-item" onclick="toggleCheck(this)">
+        <div class="check-box">✓</div>
+        <div class="check-content">
+          <div class="check-title">Submeter para revisao (Production track)</div>
+          <div class="check-desc">No Play Console > Release > Production > Create new release. Envie o .aab e publique. Tempo: poucas horas a 7 dias (primeira vez leva mais).</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="callout callout-warn">
+    <strong>Atencao Google Play</strong>
+    Desde 2023, novos apps passam por um periodo de teste obrigatorio. Voce precisa de 20 testers que usem o app por 14 dias em teste fechado antes de publicar em producao. Planeje isso!
+  </div>
+
+  <!-- ============================================ -->
+  <!-- SECAO 7: HOSPEDAGEM DAS PAGINAS LEGAIS -->
+  <!-- ============================================ -->
+  <div class="section">
+    <div class="section-header">
+      <span class="section-icon">🌐</span>
+      <span class="section-title">7. Hospedagem das Paginas Legais</span>
+      <span class="section-badge badge-both">Ambas</span>
+    </div>
+    <div class="checklist">
+      <div class="check-item" onclick="toggleCheck(this)">
+        <div class="check-box">✓</div>
+        <div class="check-content">
+          <div class="check-title">Hospedar terms.html e privacy.html</div>
+          <div class="check-desc">Os HTMLs estao na pasta <code>public/</code>. Hospede-os em: GitHub Pages (gratis), Vercel, Netlify ou seu proprio dominio. As URLs precisam ser publicas e acessiveis sem login.</div>
+        </div>
+      </div>
+      <div class="check-item" onclick="toggleCheck(this)">
+        <div class="check-box">✓</div>
+        <div class="check-content">
+          <div class="check-title">Comprar dominio (opcional mas recomendado)</div>
+          <div class="check-desc">Ex: matchrun.app ou matchrun.com.br. Facilita a confianca das lojas e dos usuarios. Configure SSL (HTTPS obrigatorio).</div>
+        </div>
+      </div>
+      <div class="check-item" onclick="toggleCheck(this)">
+        <div class="check-box">✓</div>
+        <div class="check-content">
+          <div class="check-title">Testar que as URLs funcionam</div>
+          <div class="check-desc">Abra as URLs no navegador e confirme que carregam corretamente. A Apple e o Google verificam se os links estao funcionando durante a revisao.</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ============================================ -->
+  <!-- SECAO 8: TESTES FINAIS -->
+  <!-- ============================================ -->
+  <div class="section">
+    <div class="section-header">
+      <span class="section-icon">🧪</span>
+      <span class="section-title">8. Testes Finais Antes de Submeter</span>
+      <span class="section-badge badge-both">Ambas</span>
+    </div>
+    <div class="checklist">
+      <div class="check-item" onclick="toggleCheck(this)">
+        <div class="check-box">✓</div>
+        <div class="check-content">
+          <div class="check-title">Testar fluxo completo de registro</div>
+          <div class="check-desc">Registro > Confirmacao de email > Login > Tela de seguranca > Feed. Verificar checkboxes de idade e termos.</div>
+        </div>
+      </div>
+      <div class="check-item" onclick="toggleCheck(this)">
+        <div class="check-box">✓</div>
+        <div class="check-content">
+          <div class="check-title">Testar permissao de localizacao</div>
+          <div class="check-desc">Negar permissao e verificar se o tutorial aparece corretamente (iOS e Android). Ativar e verificar se o app funciona.</div>
+        </div>
+      </div>
+      <div class="check-item" onclick="toggleCheck(this)">
+        <div class="check-box">✓</div>
+        <div class="check-content">
+          <div class="check-title">Testar criar e participar de corrida</div>
+          <div class="check-desc">Criar corrida com todos os campos. Usar outra conta para encontrar e participar via swipe. Testar chat.</div>
+        </div>
+      </div>
+      <div class="check-item" onclick="toggleCheck(this)">
+        <div class="check-box">✓</div>
+        <div class="check-content">
+          <div class="check-title">Testar conexao/desconexao Strava</div>
+          <div class="check-desc">Conectar Strava, verificar selo de verificado, desconectar e verificar que o selo some.</div>
+        </div>
+      </div>
+      <div class="check-item" onclick="toggleCheck(this)">
+        <div class="check-box">✓</div>
+        <div class="check-content">
+          <div class="check-title">Testar exclusao de conta</div>
+          <div class="check-desc">Ir em Perfil > Excluir Conta e verificar que funciona. Apple exige que exclusao de conta funcione.</div>
+        </div>
+      </div>
+      <div class="check-item" onclick="toggleCheck(this)">
+        <div class="check-box">✓</div>
+        <div class="check-content">
+          <div class="check-title">Testar links legais</div>
+          <div class="check-desc">Verificar que Termos de Uso e Politica de Privacidade abrem corretamente tanto no registro quanto no perfil.</div>
+        </div>
+      </div>
+      <div class="check-item" onclick="toggleCheck(this)">
+        <div class="check-box">✓</div>
+        <div class="check-content">
+          <div class="check-title">Criar conta de demonstracao para revisao</div>
+          <div class="check-desc">Crie uma conta com email/senha simples (ex: demo@matchrun.app / Demo123456). Conecte Strava, crie corridas de exemplo. A Apple exige credenciais de teste.</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ============================================ -->
+  <!-- SECAO 9: POS-PUBLICACAO -->
+  <!-- ============================================ -->
+  <div class="section">
+    <div class="section-header">
+      <span class="section-icon">🚀</span>
+      <span class="section-title">9. Pos-Publicacao</span>
+      <span class="section-badge badge-both">Ambas</span>
+    </div>
+    <div class="checklist">
+      <div class="check-item" onclick="toggleCheck(this)">
+        <div class="check-box">✓</div>
+        <div class="check-content">
+          <div class="check-title">Monitorar status da revisao</div>
+          <div class="check-desc">Acompanhe no App Store Connect e Play Console. Se rejeitado, leia o motivo e corrija. Rejeicoes comuns: screenshots inconsistentes, links quebrados, funcionalidade incompleta.</div>
+        </div>
+      </div>
+      <div class="check-item" onclick="toggleCheck(this)">
+        <div class="check-box">✓</div>
+        <div class="check-content">
+          <div class="check-title">Configurar EAS Update para atualizacoes OTA</div>
+          <div class="check-desc">Execute <code>npx eas update:configure</code>. Permite enviar atualizacoes de JS/assets sem passar pela revisao das lojas. Ideal para bug fixes rapidos.</div>
+        </div>
+      </div>
+      <div class="check-item" onclick="toggleCheck(this)">
+        <div class="check-box">✓</div>
+        <div class="check-content">
+          <div class="check-title">Responder avaliacoes dos usuarios</div>
+          <div class="check-desc">Tanto App Store quanto Play Store permitem responder reviews. Isso melhora o ranking e a confianca.</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- RESUMO COMANDOS -->
+  <div class="desc-box">
+    <h3>⚡ Resumo de Comandos EAS</h3>
+    <pre id="commands"># Configurar
+npx eas-cli login
+npx eas build:configure
+
+# Build
+npx eas build --platform ios --profile production
+npx eas build --platform android --profile production
+
+# Enviar para as lojas
+npx eas submit --platform ios
+npx eas submit --platform android
+
+# Atualizar sem build (OTA)
+npx eas update --branch production --message "descricao"</pre>
+    <button class="copy-btn" onclick="copyText('commands', this)">📋 Copiar</button>
+  </div>
+
+  <div class="footer">
+    <p>MatchRun - Checklist de Publicacao</p>
+    <p>Gerado automaticamente. Mantenha este documento atualizado conforme avanca.</p>
+  </div>
+
+</div>
+
+<script>
+  function toggleCheck(el) {
+    el.classList.toggle('checked');
+    updateProgress();
+    saveState();
+  }
+
+  function updateProgress() {
+    const total = document.querySelectorAll('.check-item').length;
+    const checked = document.querySelectorAll('.check-item.checked').length;
+    const pct = total > 0 ? Math.round((checked / total) * 100) : 0;
+    document.getElementById('progressFill').style.width = pct + '%';
+    document.getElementById('progressText').textContent = checked + ' de ' + total + ' concluidos (' + pct + '%)';
+  }
+
+  function copyText(id, btn) {
+    const text = document.getElementById(id).textContent;
+    navigator.clipboard.writeText(text).then(() => {
+      btn.classList.add('copied');
+      btn.innerHTML = '✅ Copiado!';
+      setTimeout(() => {
+        btn.classList.remove('copied');
+        btn.innerHTML = '📋 Copiar';
+      }, 2000);
+    });
+  }
+
+  function saveState() {
+    const items = document.querySelectorAll('.check-item');
+    const state = [];
+    items.forEach((item, i) => { state.push(item.classList.contains('checked')); });
+    localStorage.setItem('matchrun-checklist', JSON.stringify(state));
+  }
+
+  function loadState() {
+    const saved = localStorage.getItem('matchrun-checklist');
+    if (saved) {
+      const state = JSON.parse(saved);
+      const items = document.querySelectorAll('.check-item');
+      items.forEach((item, i) => {
+        if (state[i]) item.classList.add('checked');
+      });
+    }
+    updateProgress();
+  }
+
+  loadState();
+</script>
+
+</body>
+</html>
